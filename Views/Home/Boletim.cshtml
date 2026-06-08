@@ -1,0 +1,72 @@
+@{
+    ViewData["Title"] = "Boletim";
+
+    List<string> disciplinas = (List<string>)ViewBag.Disciplinas;
+    List<double> notas = (List<double>)ViewBag.Notas;
+
+    double soma = 0;
+}
+
+<h2>Boletim Escolar</h2>
+
+<table border="1">
+    <tr>
+        <th>Disciplina</th>
+        <th>Nota</th>
+        <th>Status</th>
+        <th>Classificação</th>
+    </tr>
+
+    @for (int i = 0; i < disciplinas.Count; i++)
+    {
+        soma += notas[i];
+
+        <tr>
+            <td>@disciplinas[i]</td>
+
+            <td>@notas[i]</td>
+
+            <td>
+                @if (notas[i] >= 6)
+                {
+                    <span style="color:green">Aprovado</span>
+                }
+                else
+                {
+                    <span style="color:red">Reprovado</span>
+                }
+            </td>
+
+            <td>
+                @{
+                    string conceito;
+
+                    switch (notas[i])
+                    {
+                        case >= 9:
+                            conceito = "A";
+                            break;
+
+                        case >= 7:
+                            conceito = "B";
+                            break;
+
+                        case >= 5:
+                            conceito = "C";
+                            break;
+
+                        default:
+                            conceito = "D";
+                            break;
+                    }
+                }
+
+                @conceito
+            </td>
+        </tr>
+    }
+</table>
+
+<p>
+    <strong>Média Geral: @(soma / notas.Count)</strong>
+</p>
